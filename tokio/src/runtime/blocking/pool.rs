@@ -247,6 +247,7 @@ impl fmt::Debug for BlockingPool {
 
 impl Spawner {
     #[track_caller]
+    #[inline(always)]
     pub(crate) fn spawn_blocking<F, R>(&self, rt: &Handle, func: F) -> JoinHandle<R>
     where
         F: FnOnce() -> R + Send + 'static,
@@ -342,6 +343,7 @@ impl Spawner {
         (handle, spawned)
     }
 
+    #[inline(always)]
     fn spawn_task(&self, task: Task, rt: &Handle) -> Result<(), SpawnError> {
         let mut shared = self.inner.shared.lock();
 
@@ -402,6 +404,7 @@ impl Spawner {
         Ok(())
     }
 
+    #[inline(always)]
     fn spawn_thread(
         &self,
         shutdown_tx: shutdown::Sender,

@@ -26,6 +26,7 @@ pub(crate) struct Handle {
 
 impl Handle {
     /// Spawns a future onto the thread pool
+    #[inline(always)]
     pub(crate) fn spawn<F>(me: &Arc<Self>, future: F, id: task::Id) -> JoinHandle<F::Output>
     where
         F: crate::future::Future + Send + 'static,
@@ -38,6 +39,7 @@ impl Handle {
         self.close();
     }
 
+    #[inline(always)]
     pub(super) fn bind_new_task<T>(me: &Arc<Self>, future: T, id: task::Id) -> JoinHandle<T::Output>
     where
         T: Future + Send + 'static,

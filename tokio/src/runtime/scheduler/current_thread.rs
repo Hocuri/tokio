@@ -365,6 +365,7 @@ impl Context {
 
 impl Handle {
     /// Spawns a future onto the `CurrentThread` scheduler
+    #[inline(always)]
     pub(crate) fn spawn<F>(
         me: &Arc<Self>,
         future: F,

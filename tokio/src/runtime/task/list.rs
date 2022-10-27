@@ -80,6 +80,7 @@ impl<S: 'static> OwnedTasks<S> {
 
     /// Binds the provided task to this OwnedTasks instance. This fails if the
     /// OwnedTasks has been closed.
+    #[inline(always)]
     pub(crate) fn bind<T>(
         &self,
         task: T,

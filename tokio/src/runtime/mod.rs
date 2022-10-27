@@ -414,11 +414,13 @@ cfg_rt! {
         /// # }
         /// ```
         #[track_caller]
+        #[inline(always)]
         pub fn spawn<F>(&self, future: F) -> JoinHandle<F::Output>
         where
             F: Future + Send + 'static,
             F::Output: Send + 'static,
         {
+            let future = Box::pin(future);
             self.handle.spawn(future)
         }
 
@@ -494,7 +496,9 @@ cfg_rt! {
         ///
         /// [handle]: fn@Handle::block_on
         #[track_caller]
+        #[inline(always)]
         pub fn block_on<F: Future>(&self, future: F) -> F::Output {
+            let future = Box::pin(future);
             #[cfg(all(tokio_unstable, feature = "tracing"))]
             let future = crate::util::trace::task(future, "block_on", None, task::Id::next().as_u64());
 

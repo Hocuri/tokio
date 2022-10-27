@@ -83,6 +83,7 @@ cfg_rt! {
             }
         }
 
+        #[inline(always)]
         pub(crate) fn spawn<F>(&self, future: F, id: Id) -> JoinHandle<F::Output>
         where
             F: Future + Send + 'static,

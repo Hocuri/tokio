@@ -158,6 +158,7 @@ cfg_rt! {
     /// error[E0391]: cycle detected when processing `main`
     /// ```
     #[track_caller]
+    #[inline(always)]
     pub fn spawn<T>(future: T) -> JoinHandle<T::Output>
     where
         T: Future + Send + 'static,

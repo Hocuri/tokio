@@ -102,6 +102,7 @@ const fn get_trailer_offset(
 }
 
 impl RawTask {
+    #[inline(always)]
     pub(super) fn new<T, S>(task: T, scheduler: S, id: Id) -> RawTask
     where
         T: Future,
